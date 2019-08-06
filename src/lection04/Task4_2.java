@@ -16,7 +16,7 @@ public class Task4_2 {
 
     static void askMoney(int requestCash) {
         if (requestCash % 10 != 0) {
-            System.out.println("Wrong sum, please enter correct sum");
+            System.out.println("Неверно введена сумма, пожалуйста, введите правильную сумму");
         } else {
             boolean firstAnswer;
             if (x100 * 100 + x50 * 50 + x20 * 20 >= requestCash) {
@@ -24,7 +24,7 @@ public class Task4_2 {
                 System.out.println("успешно");
             } else {
                 firstAnswer = false;
-                System.out.println("not enough money");
+                System.out.println("Недостаточно средств");
             }
 
         }
