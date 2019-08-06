@@ -21,7 +21,7 @@ public class Task4_2 {
             boolean firstAnswer;
             if (x100 * 100 + x50 * 50 + x20 * 20 >= requestCash) {
                 firstAnswer = true;
-                System.out.println("успешно");
+                System.out.println("Успешно");
             } else {
                 firstAnswer = false;
                 System.out.println("Недостаточно средств");
