@@ -11,27 +11,46 @@ public class Task4_2 {
         val20 += addvalue20;
         val50 += addvalue50;
         val100 += addvalue100;
-        System.out.println("В банкомате в наличии " +  (addvalue20 * 20 + addvalue50 * 50 +addvalue100 * 100) + " руб.");
+        System.out.println("В банкомате в наличии " + (addvalue20 * 20 + addvalue50 * 50 + addvalue100 * 100) + " руб.");
     }
 
     static void askMoney(int requestCash) {
-        if (requestCash % 20 != 0) {
-            System.out.println("Неверно введена сумма! Пожалуйста, введите сумму, кратную 20");
-        } else {
-            boolean firstAnswer;
-            if (val20 * 20 + val50 * 50 + val100 * 100 >= requestCash) {
-                firstAnswer = true;
+        //для упрощения алгоритма банкомат программируется на выдачу в первую очередь 100-рублевых купюр
+
+        if ((val20 * 20 + val50 * 50 + val100 * 100 >= requestCash) && requestCash/100<=val100) {
+            if (requestCash%100==60 || requestCash%100==80 && (requestCash%100)/20<=val20) {
                 System.out.println("Запрос выполнен успешно");
+                System.out.println("Выдано: " + requestCash/100 + "шт. х 100руб., " + (requestCash%100)/20 + "шт. х 20руб." );
+            } else if ((requestCash%100)/50 <= val50 && ((requestCash%100)%50)%20 == 0 && ((requestCash%100)%50)/20 <= val20) {
+                System.out.println("Запрос выполнен успешно");
+                System.out.println("Выдано: " + requestCash/100 + "шт. х 100руб., " + (requestCash%100)/50 + "шт. х 50руб., " + ((requestCash%100)%50)/20 + "шт. х 20руб.");
+            } else if ((requestCash%100)/50 > val50 && ((requestCash%100)%50)%20 == 0 && ((requestCash%100)%50)/20 <= val20) {
+                System.out.println("Запрос выполнен успешно");
+                System.out.println("Выдано: " + requestCash/100 + "шт х 100руб.," + (requestCash%100)/50 + "шт х 50руб., " + (requestCash % 100 - 50) / 20 + "шт. х 20руб.");
             } else {
-                firstAnswer = false;
-                System.out.println("Недостаточно средств в банкомате");
+                System.out.println("Недостаточно купюр требуемого номинала");
             }
-
+        } else if ((val20 * 20 + val50 * 50 + val100 * 100 >= requestCash) && requestCash/100>val100) {
+            if ((requestCash-100*val100)/50<=val50 && ((requestCash-100*val100)%50)%20==0 && ((requestCash-100*val100)%50)/20<=val20){
+                System.out.println("Запрос выполнен успешно");
+                System.out.println("Выдано: " + val100 + "шт. х 100руб., " + (requestCash-100*val100)/50 + "шт. х 50руб., " + ((requestCash-100*val100)%50)/20 + "шт. х 20руб.");
+            } else if ((requestCash-100*val100)/50>val50 && ((requestCash-100*val100-50*val50)%20==0 && (requestCash-100*val100-50*val50)/20<=val20)) {
+                System.out.println("Запрос выполнен успешно");
+                System.out.println("Выдано: " + val100 + "шт. х 100руб., " + val50 + "шт. х 50руб., " + (requestCash-100*val100-50*val50)/20 + "шт. х 20руб.");
+            } else {
+                System.out.println("Недостаточно купюр требуемого номинала");
+            }
+        } else {
+            System.out.println("В банкомате недостаточно средств для выполнения запроса");
         }
-
     }
-
 }
+
+/* пока программа не расчитывает оптимальное сочетание 50-ти и 20-ти рублевок при недостаточности 100-рублевых купюр
+* т.е. в ряде случаев не выдаются суммы 110=50+20*3, 130=50+20*4, 230=50+20*9 или 50*3+20*3 и т.п.
+* но закономерность: если (requestCash-100*val100) 3-х значное и 1-я цифра=1, то сумма складывается из одной 50 и двадцаток
+* 1-я цифра=2, то сумма складывается из одной или трех 50 и двадцаток; т.е. нечетное кол-во 50руб с максимумом
+* (requestCash-100*val100)/100+1 или на одну больше, чем кол-во разрядов 100 */
 
 class Bankomat {
     private int ask100;
@@ -41,18 +60,9 @@ class Bankomat {
     public static void main(String[] args) {
         Task4_2 CM1 = new Task4_2();
 
-        CM1.addMoney(50, 10, 25);
-        CM1.askMoney(1200);
+        CM1.addMoney(10, 2, 0);
+        CM1.askMoney(190);
 
     }
-            // дальше не работает
-    /*private void convertWhatValues(int requestCash) {             // метод определения видов выдаваемых купюр
-        requestCash = Math.abs(requestCash);
-        this.ask100 = requestCash / 100;                           // расчет
-        requestCash %= 100;
-        this.ask50 = requestCash / 50;
-        this.ask20 = requestCash % 20;
-        System.out.println(ask100);
-    }*/
 
 }
