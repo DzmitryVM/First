@@ -17,8 +17,30 @@ public class Task4_2 {
     static void askMoney(int requestCash) {
         //для упрощения алгоритма банкомат программируется на выдачу в первую очередь 100-рублевых купюр
 
-        if ((val20 * 20 + val50 * 50 + val100 * 100 >= requestCash) && requestCash/100<=val100) {
-            if (requestCash%100==60 || requestCash%100==80 && (requestCash%100)/20<=val20) {
+        if ((requestCash/10)%20!=0 && requestCash/100>val100 && val50>0) {   // "исключение" №1: выдача суммы при нечетном кол-ве десяток, т.е. 230/10=13
+            for (int i=1; i<=val50; i=i+2){
+                if((requestCash-100*val100-50*i)/20<=val20) {
+                    System.out.println("Запрос выполнен успешно");
+                    System.out.println("Выдано: " + val100 + "шт. х 100руб., " + i + "шт. х 50руб., " + (requestCash - 100 * val100 - 50 * i) / 20 + "шт. х 20руб.");
+                    break;
+                } else {
+                    System.out.println("Недостаточно купюр требуемого номинала");
+                }
+            }
+        }
+        else if ((requestCash/10)%20!=0 && requestCash/100==val100 && val50>0) { // "исключение" №2: выдача суммы при нечетном кол-ве десяток и когда соток одинаково
+            for (int i=1; i<=val50; i=i+2){
+                if((requestCash-100*(val100-1)-50*i)/20<=val20) {
+                    System.out.println("Запрос выполнен успешно");
+                    System.out.println("Выдано: " + (val100-1) + "шт. х 100руб., " + i + "шт. х 50руб., " + (requestCash - 100 * (val100-1) - 50 * i) / 20 + "шт. х 20руб.");
+                    break;
+                } else {
+                    System.out.println("Недостаточно купюр требуемого номинала");
+                }
+            }
+        }
+        else if ((val20 * 20 + val50 * 50 + val100 * 100 >= requestCash) && requestCash/100<=val100) {   // выдача если соток в наличии больше
+            if (requestCash%100==60 || requestCash%100==80 && (requestCash%100)/20<=val20) {             // "исключение" №3
                 System.out.println("Запрос выполнен успешно");
                 System.out.println("Выдано: " + requestCash/100 + "шт. х 100руб., " + (requestCash%100)/20 + "шт. х 20руб." );
             } else if ((requestCash%100)/50 <= val50 && ((requestCash%100)%50)%20 == 0 && ((requestCash%100)%50)/20 <= val20) {
@@ -30,7 +52,7 @@ public class Task4_2 {
             } else {
                 System.out.println("Недостаточно купюр требуемого номинала");
             }
-        } else if ((val20 * 20 + val50 * 50 + val100 * 100 >= requestCash) && requestCash/100>val100) {
+        } else if ((val20 * 20 + val50 * 50 + val100 * 100 >= requestCash) && requestCash/100>val100) {     // выдача если соток в наличии меньше
             if ((requestCash-100*val100)/50<=val50 && ((requestCash-100*val100)%50)%20==0 && ((requestCash-100*val100)%50)/20<=val20){
                 System.out.println("Запрос выполнен успешно");
                 System.out.println("Выдано: " + val100 + "шт. х 100руб., " + (requestCash-100*val100)/50 + "шт. х 50руб., " + ((requestCash-100*val100)%50)/20 + "шт. х 20руб.");
@@ -40,17 +62,12 @@ public class Task4_2 {
             } else {
                 System.out.println("Недостаточно купюр требуемого номинала");
             }
-        } else {
+        }
+        else {
             System.out.println("В банкомате недостаточно средств для выполнения запроса");
         }
     }
 }
-
-/* пока программа не расчитывает оптимальное сочетание 50-ти и 20-ти рублевок при недостаточности 100-рублевых купюр
-* т.е. в ряде случаев не выдаются суммы 110=50+20*3, 130=50+20*4, 230=50+20*9 или 50*3+20*3 и т.п.
-* но закономерность: если (requestCash-100*val100) 3-х значное и 1-я цифра=1, то сумма складывается из одной 50 и двадцаток
-* 1-я цифра=2, то сумма складывается из одной или трех 50 и двадцаток; т.е. нечетное кол-во 50руб с максимумом
-* (requestCash-100*val100)/100+1 или на одну больше, чем кол-во разрядов 100 */
 
 class Bankomat {
     private int ask100;
@@ -60,8 +77,8 @@ class Bankomat {
     public static void main(String[] args) {
         Task4_2 CM1 = new Task4_2();
 
-        CM1.addMoney(10, 2, 0);
-        CM1.askMoney(190);
+        CM1.addMoney(5, 5, 0);
+        CM1.askMoney(400);
 
     }
 
