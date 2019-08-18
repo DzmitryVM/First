@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 public class Task5_1 {
-    private static int num1=2;
+    private static int num1=1;
     private static int num2=6;
     private static String name = "Класс с двумя аргументами: ";
 
