@@ -9,7 +9,8 @@ public class ShapeUtils {
                         new Triangle(3,1,5),
                         new Circle(10),
                         new Ellipse(4, 10)};
-        //вывод данных о классе через переопределнный метод toString(), расчет и вывод в консоль значений площадей
+        // проверка правильности введенных параметров: существуют такие фигуры или нет
+        // вывод данных о классе через переопределнный метод toString(), расчет и вывод в консоль значений площадей
         for (Shape shape1 : shape) {
             if(shape1.notZeroAndExist()==false && shape1.getName().equals("Triangle")) {
                 System.out.println(shape1.getName() + " with parameter = 0 or negative parameter isn't exist. " +
