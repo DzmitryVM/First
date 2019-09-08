@@ -1,11 +1,12 @@
 package lection_Inners;
 
-class Square implements Shape.FourSides {       // 2-й уровень вложенности: квадрат
-    private static final String NAME = "Square";
-    private double side;
+class Rhombus implements Shape.FourSides {
+    private static final String NAME = "Rhombus";
+    private double side, minDiagonal;
 
-    public Square(double side) {
+    public Rhombus(double side, double minDiagonal) {
         this.side = side;
+        this.minDiagonal = minDiagonal;
     }
 
     @Override                                  // переопределяем методы внешних классов
@@ -23,9 +24,9 @@ class Square implements Shape.FourSides {       // 2-й уровень влож�
         return checkZero;
     }
 
-    @Override
+    @Override    // площадь определяем по формуле S=(диагональ1 + диагональ2) / 2
     public double getSpace() {
-        return Math.pow(side, 2);
+        return (getMaxDiagonal()/2)*(minDiagonal/2);
     }
 
     @Override
@@ -44,7 +45,7 @@ class Square implements Shape.FourSides {       // 2-й уровень влож�
         return (infoClass.append(getName()).append(" with side ").append(side).toString());
     }
 
-    public double getDiagonal(){               // Добавляем свой метод для квадрата
-        return Math.sqrt(2*Math.pow(side,2));
+    public double getMaxDiagonal(){               // Добавляем свой метод по расчету второй диагонали
+        return Math.sqrt(Math.pow(side,2)-Math.pow(minDiagonal/2,2))*2;
     }
 }
