@@ -6,12 +6,16 @@ package lection_Generics;
 
 final class PairUtil {
 
-    public static String swap() {
-        Pair<Integer, String> pair1 = new Pair<Integer, String>(1, "First");
-        return pair1.getValue() + ", " + pair1.getKey().toString();                  // меняем местами элементы при выводе
+    private PairUtil () {}
+
+    public static <argK, argV> Pair <argV, argK> swap (Pair<argK, argV> pair){
+        return new Pair<>(pair.getValue(), pair.getKey());
     }
 
     public static void main(String[] args) {
-        System.out.println("Our result: " + swap());
+        Pair<Integer, String> pair1 = new Pair<Integer, String>(1, "First");
+        System.out.println("Our result: " + swap(pair1).getValue() + ", " + swap(pair1).getKey());
     }
+
+
 }
