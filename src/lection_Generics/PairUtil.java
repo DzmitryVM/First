@@ -14,7 +14,7 @@ final class PairUtil {
 
     public static void main(String[] args) {
         Pair<Integer, String> pair1 = new Pair<Integer, String>(1, "First");
-        System.out.println("Our result: " + swap(pair1).getValue() + ", " + swap(pair1).getKey());
+        System.out.println("Our result: " + swap(pair1).getValue() + " - " + swap(pair1).getKey());
     }
 
 
